@@ -3,6 +3,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import "./app.css";
 import Navbar from "./layout/navbar";
 
+
 import Home from "./pages/home";
 import Contact from "./pages/contact";
 import SignIn from "./pages/signin";
