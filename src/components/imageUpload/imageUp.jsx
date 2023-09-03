@@ -18,33 +18,41 @@ function ImageUpload() {
   };
 
   return (
-    <div>
+    <div className="w-full max-w-md mx-auto text-center">
       {/* Label element containing input and icon */}
-      <label className="file-input-label">
+      <label className="flex flex-col items-center justify-center h-40 p-4 border-2 border-gray-300 border-dashed rounded-md cursor-pointer file-input-label">
         <input
           type="file"
           accept="image/*"
           multiple
           onChange={handleImageChange}
-          className="hidden" // Hide the actual input field
+          className="hidden"
         />
-        <img
-          src="/images/uploadImg/addPhoto.png" // Replace with the actual path to your PNG image
-          alt="Choose File"
-          className="file-input-icon"
-        />
+        <div className="flex flex-col items-center justify-center h-full">
+          <img
+            src="/images/uploadImg/addPhoto.png"
+            alt="Choose File"
+            className="w-12 h-12 mb-2 file-input-icon"
+          />
+          <span className="text-lg">Choose a photo</span>
+        </div>
       </label>
 
       {/* Display the selected images (if any) */}
-      <div>
+      <div className="mt-4">
         {selectedImages.map((image, index) => (
-          <div key={index} className="image-preview">
+          <div key={index} className="mb-4 image-preview">
             <img
               src={URL.createObjectURL(image)}
               alt={`Selected ${index + 1}`}
-              style={{ maxWidth: '100%', maxHeight: '200px' }}
+              className="w-full h-auto rounded-md"
             />
-            <button onClick={() => removeImage(index)}>Remove</button>
+            <button
+              onClick={() => removeImage(index)}
+              className="px-4 py-2 mt-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+            >
+              Remove
+            </button>
           </div>
         ))}
       </div>
