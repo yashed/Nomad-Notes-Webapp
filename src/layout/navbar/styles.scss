@@ -1,4 +1,18 @@
 #navbar {
+    background: transparent;
+    transition: background 0.3s ease, backdrop-filter 0.00005s ease;
+    backdrop-filter: blur(0px);
+
+    &.isScrolled {
+        background: rgba(126, 223, 255, 0.116);
+        background: rgba(38, 73, 131, 0.716);
+
+        backdrop-filter: blur(15.5px);
+        -webkit-backdrop-filter: blur(15.5px);
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    }
+
     // background: yellowgreen;
 
     .nav-wrapper {

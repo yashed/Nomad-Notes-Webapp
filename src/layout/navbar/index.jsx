@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+// import React from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  return <div id="navbar" className="fixed w-screen z-50">
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100)
+        setIsScrolled(true);
+      else
+        setIsScrolled(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return <div id="navbar" className={`fixed w-screen z-50 ${isScrolled ? "isScrolled" : ""}`}>
     <div className="nav-wrapper flex justify-between items-center p-4 px-16">
       <div className="logo-wrap w-1/4">
         <div className="logo w-16">
