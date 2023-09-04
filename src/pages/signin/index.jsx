@@ -11,7 +11,7 @@ export default function SignIn() {
     <div id="signin" className="container">
       <div className="section image-section">
         <img
-          src="/images/signin/buildings.png"
+          src="/images/signin/buildings-2.jpg"
           alt="Buildings"
           className="image"
         />
