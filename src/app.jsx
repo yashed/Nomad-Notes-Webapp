@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import "./app.css";
+import "./App.css";
 import Navbar from "./layout/navbar";
 
 import Home from "./pages/home";
