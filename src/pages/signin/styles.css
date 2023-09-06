@@ -1,6 +1,8 @@
 #signin {
   display: flex;
   gap: 20px;
+
+  max-width: unset;
 }
 
 #signin .section {
