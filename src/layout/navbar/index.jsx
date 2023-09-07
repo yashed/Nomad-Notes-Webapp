@@ -1,93 +1,81 @@
-import { React, useCallback, useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
-import { Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+// import React from "react";
+import './styles.scss';
+import { Link } from 'react-router-dom';
 
-import './styles.css';
+export default function Navbar () {
+    const { pathname } = useLocation();
+    const theme = pathname === '/' ? 'light' : 'white';
+    const [isScrolled, setIsScrolled] = useState(false);
 
-const Navbar = () => {
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 100) setIsScrolled(true);
+            else setIsScrolled(false);
+        };
 
-    const onDestinationClick = useCallback(() => {}, []);
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
-    const onStoriesClick = useCallback(() => {}, []);
-
-    const onReviewsClick = useCallback(() => {}, []);
-
-    const onSignUpClick = useCallback(() => {}, []);
-
-    const onLoginClick = useCallback(() => {}, []);
-
-    const [expanded, setExpanded] = useState(false);
     return (
-        <div id='navbar'>
-            <div className='nav-logo'>
-                <img className='logo' alt='' src='public\images\signin\logo\logo.png' />
-            </div>
-            <div className='navbar-parent'>
-                <Button
-                    className='navbar-btn'
-                    variant='text'
-                    name='nav_btn'
-                    color='primary'
-                    href='/destination'
-                    onClick={onDestinationClick}>
-                    Destination
-                </Button>
-                <Button
-                    className='navbar-btn'
-                    variant='text'
-                    name='stories_btn'
-                    color='primary'
-                    href='/stories'
-                    onClick={onStoriesClick}>
-                    Stories
-                </Button>
-                <Button
-                    className='navbar-btn'
-                    variant='text'
-                    name='reviews_btn'
-                    color='primary'
-                    href='/review'
-                    onClick={onReviewsClick}>
-                    Reviews
-                </Button>
-            </div>
-            <div className='login-parent'>
-                <div classname='search'></div>
-                {expanded ? (
-                    <input type='text' onBlur={() => setExpanded(false)} />
-                ) : (
-                    <button
-                        className='akar-iconssearch'
-                        sx={{ width: 28 }}
-                        color='primary'
-                        onClick={() => setExpanded(true)}>
-                        <FiSearch />
-                    </button>
-                )}
-                <div className='sign-up-parent'>
-                    <Button
-                        className='navbar-btn'
-                        variant='text'
-                        name='signup_btn'
-                        color='primary'
-                        href='/sign-up'
-                        onClick={onSignUpClick}>
+        <div id='navbar' className={`fixed w-screen z-50 ${isScrolled ? 'isScrolled' : ''}`}>
+            <div className='nav-wrapper flex justify-between items-center p-4 px-16'>
+                <div className='logo-wrap w-1/4'>
+                    <div className='logo w-16'>
+                        <img
+                            src={`${
+                                theme === 'light'
+                                    ? '/images/logo/logo.png'
+                                    : '/images/logo/logo_blue.png'
+                            }`}
+                            alt='Logo'
+                            className='img logo'
+                        />
+                    </div>
+                </div>
+                <div className='links-wrap text-xl font-bold w-1/3 flex justify-center'>
+                    <Link
+                        to='/'
+                        className={`link ${theme === 'light' ? 'text-white' : 'text-black'} mr-16`}>
+                        Destination
+                    </Link>
+                    <Link
+                        to='/stories'
+                        className={`link ${theme === 'light' ? 'text-white' : 'text-black'} mr-16`}>
+                        Stories
+                    </Link>
+                    <Link
+                        to='/signin'
+                        className={`link ${theme === 'light' ? 'text-white' : 'text-black'} mr-16`}>
+                        Reviews
+                    </Link>
+                </div>
+                <div className='cta-wrap flex items-center justify-end w-1/4'>
+                    <div
+                        className={`search-btn flex items-center ${
+                            theme === 'light' ? 'text-white' : 'text-black'
+                        } cursor-pointer`}>
+                        <i className='bx bx-search text-2xl font-bold mt-1'></i>
+                    </div>
+                    <Link
+                        to='/signup'
+                        className={`btn rounded-md py-2 px-3 text-xl font-bold
+                        ${theme === 'light' ? 'text-white' : 'text-black'} ml-4`}>
                         Sign Up
-                    </Button>
-                    <Button
-                        className='login-btn'
-                        sx={{ width: 167, borderRadius: 5}}
-                        variant='contained'
-                        name='login_btn'
-                        color='primary'
-                        href='/default-login'
-                        onClick={onLoginClick}>
+                    </Link>
+                    <Link
+                        to='/signin'
+                        className={`btn rounded-full bg-white py-2 px-8 text-xl font-bold
+        ${theme === 'light' ? 'text-white' : 'text-blue-500'} shadow-sm hover:bg-black hover:text-white
+         focus:outline-none focus:ring-2 ml-4`}>
                         Login
-                    </Button>
+                    </Link>
                 </div>
             </div>
         </div>
     );
-};
-
-export default Navbar;
+}
