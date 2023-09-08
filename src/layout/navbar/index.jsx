@@ -23,12 +23,12 @@ export default function Navbar() {
   return <div id="navbar" className={`fixed w-screen z-50 ${isScrolled ? "isScrolled" : ""}`}>
     <div className="nav-wrapper flex justify-between items-center p-4 px-16">
       <div className="logo-wrap w-1/4">
-        <div className="logo w-16">
+        <Link to="./" className="logo w-16 block">
           <img src="/images/logo/logo.png" alt="Logo" className="img logo" />
-        </div>
+        </Link>
       </div>
       <div className="links-wrap text-xl font-bold text-white w-1/3 flex justify-center">
-        <Link to="/" className="link text-white mr-16">Destination</Link>
+        <Link to="/destinations" className="link text-white mr-16">Destination</Link>
         <Link to="/contact" className="link text-white mr-16">Stories</Link>
         <Link to="/signin" className="link text-white">Reviews</Link>
       </div>
