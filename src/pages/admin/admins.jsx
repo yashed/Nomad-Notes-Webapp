@@ -5,6 +5,7 @@ import axiosInstance from '../../utils/axios-instance';
 import { NotificationManager } from 'react-notifications';
 import PopUp from '../../modals/popup';
 import AddAdmin from '../../modals/add-admin';
+import SearchBar from '../../components/search-bar';
 
 export default function Admins() {
     const [loading, setLoading] = React.useState(true);
@@ -12,13 +13,13 @@ export default function Admins() {
     const [openModal, setOpenModal] = React.useState(false);
 
     React.useEffect(() => {
+        setLoading(true);
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        setLoading(true);
+    const fetchData = (search = '') => {
         axiosInstance
-            .get('/admins/all')
+            .get('/admins/all', { params: { search } })
             .then((result) => {
                 if (result?.data?.data) setData(result?.data?.data);
             })
@@ -43,9 +44,16 @@ export default function Admins() {
             <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
                 Admins
             </h1>
+
+            <div className="mb-4">
+                <SearchBar onSearch={fetchData} />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
                 {loading ? (
-                    <div className="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                    <div
+                        style={{ minHeight: 250 }}
+                        className="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                         <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
                             loading...
                         </div>

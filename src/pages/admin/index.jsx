@@ -2,7 +2,8 @@ import React from 'react';
 import {
     MdOutlineAdminPanelSettings,
     MdOutlineHistoryEdu,
-    MdOutlineKeyboardArrowLeft
+    MdOutlineKeyboardArrowLeft,
+    MdOutlineLocationOn
 } from 'react-icons/md';
 import { FiUsers } from 'react-icons/fi';
 import { Link, NavLink, Route, Router, Routes } from 'react-router-dom';
@@ -10,6 +11,7 @@ import Admins from './admins';
 import Users from './users';
 import Stories from './stories';
 import './styles.css';
+import Countries from './countries';
 
 const adminRoutes = [
     {
@@ -26,6 +28,11 @@ const adminRoutes = [
         icon: MdOutlineHistoryEdu,
         title: 'Travel Stories',
         to: '/admin/story'
+    },
+    {
+        icon: MdOutlineLocationOn,
+        title: 'Countries',
+        to: '/admin/country'
     }
 ];
 
@@ -92,6 +99,7 @@ export default function Admin() {
                     <Route path="/" element={<Admins />} />
                     <Route path="user" element={<Users />} />
                     <Route path="story" element={<Stories />} />
+                    <Route path="country" element={<Countries />} />
                 </Routes>
             </div>
         </div>

@@ -1,22 +1,23 @@
 import React from 'react';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsPlus, BsThreeDots } from 'react-icons/bs';
 import { IoCloseSharp } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
 import axiosInstance from '../../utils/axios-instance';
 import { NotificationManager } from 'react-notifications';
 import PopUp from '../../modals/popup';
 import ConfirmModal from '../../modals/confirm';
-import EditStoryModal from '../../modals/edit-story';
+import EditCountryModal from '../../modals/edit-country';
 import SearchBar from '../../components/search-bar';
+import AddCountryModal from '../../modals/add-country';
 
-export default function Stories() {
+export default function Countries() {
     const [selectedItem, setSelectedItem] = React.useState('');
     const [loading, setLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
     const [isProcessing, setIsProcessing] = React.useState(false);
+    const [openNewCountryModal, setOpenNewCountryModal] = React.useState(false);
     const [openDeleteModal, setOpenDeleteModal] = React.useState({});
-    const [openStoryModal, setOpenStoryModal] = React.useState({});
-    const [openEditStoryModal, setOpenEditStoryModal] = React.useState({});
+    const [openCountryModal, setOpenCountryModal] = React.useState({});
+    const [openEditCountryModal, setOpenEditCountryModal] = React.useState({});
 
     React.useEffect(() => {
         setLoading(true);
@@ -25,7 +26,7 @@ export default function Stories() {
 
     const fetchData = (search = '') => {
         axiosInstance
-            .get('/stories/all', { params: { search } })
+            .get('/countries/all', { params: { search } })
             .then((result) => {
                 if (result?.data?.data) setData(result?.data?.data);
             })
@@ -40,34 +41,39 @@ export default function Stories() {
             });
     };
 
-    const onEditStory = (item) => {
-        setOpenEditStoryModal(item);
+    const onEditCountry = (item) => {
+        setOpenEditCountryModal(item);
         setSelectedItem('');
     };
 
-    const onApproveStory = (item) => {
-        setOpenStoryModal(item);
+    const onApproveCountry = (item) => {
+        setOpenCountryModal(item);
         setSelectedItem('');
     };
 
-    const onDeleteStory = (item) => {
+    const onDeleteCountry = (item) => {
         setOpenDeleteModal(item);
         setSelectedItem('');
     };
 
     const onEdited = () => {
         fetchData();
-        setOpenEditStoryModal({});
+        setOpenEditCountryModal({});
+    };
+
+    const onAdded = () => {
+        fetchData();
+        setOpenNewCountryModal(false);
     };
 
     const onDelete = () => {
         setIsProcessing(true);
 
         axiosInstance
-            .delete(`/stories/remove/${openDeleteModal?._id}`)
+            .delete(`/countries/remove/${openDeleteModal?._id}`)
             .then((result) => {
                 if (result?.data?.status === 'success') {
-                    NotificationManager.success('Story details deleted');
+                    NotificationManager.success('Country details deleted');
                     setOpenDeleteModal('');
                     fetchData();
                 }
@@ -87,13 +93,13 @@ export default function Stories() {
         setIsProcessing(true);
 
         axiosInstance
-            .patch(`/stories/update/state/${openStoryModal?._id}`, {
-                approved: !openStoryModal?.approved
+            .patch(`/countries/update/state/${openCountryModal?._id}`, {
+                approved: !openCountryModal?.approved
             })
             .then((result) => {
                 if (result?.data?.status === 'success') {
-                    NotificationManager.success('Story state updated');
-                    setOpenStoryModal({});
+                    NotificationManager.success('Country state updated');
+                    setOpenCountryModal({});
                     fetchData();
                 }
             })
@@ -111,9 +117,18 @@ export default function Stories() {
     return (
         <div className="flex flex-col gap-y-5">
             <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
-                Travel Stories
+                Countries
             </h1>
 
+            <div className="mb-0 flex justify-end">
+                <button
+                    onClick={() => setOpenNewCountryModal(true)}
+                    type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Add New
+                    <BsPlus class="w-3.5 h-3.5 mr-2 text-white" />
+                </button>
+            </div>
             <div className="mb-4">
                 <SearchBar onSearch={fetchData} />
             </div>
@@ -126,16 +141,16 @@ export default function Stories() {
                         </div>
                     </div>
                 ) : data.length === 0 ? (
-                    <span>No stories yet.</span>
+                    <span>No countries yet.</span>
                 ) : (
-                    data.map((story) => {
+                    data.map((country) => {
                         return (
                             <div
-                                key={story._id}
+                                key={country._id}
                                 className="relative max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <div className="absolute right-0 flex justify-end px-4 pt-4">
                                     <div className="flex flex-col gap-2 items-end">
-                                        {selectedItem === story._id ? (
+                                        {selectedItem === country._id ? (
                                             <button
                                                 onClick={() => setSelectedItem('')}
                                                 data-dropdown-toggle="dropdown"
@@ -146,7 +161,7 @@ export default function Stories() {
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={() => setSelectedItem(story._id)}
+                                                onClick={() => setSelectedItem(country._id)}
                                                 data-dropdown-toggle="dropdown"
                                                 className="inline-block w-max text-gray-400  bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 ring-gray-700 rounded-lg text-sm p-1.5"
                                                 type="button">
@@ -158,26 +173,26 @@ export default function Stories() {
                                         <div
                                             id="dropdown"
                                             className={`${
-                                                selectedItem === story._id ? '' : 'hidden'
+                                                selectedItem === country._id ? '' : 'hidden'
                                             } z-10 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
                                             <ul className="py-2" aria-labelledby="dropdownButton">
                                                 <li>
                                                     <span
-                                                        onClick={() => onEditStory(story)}
+                                                        onClick={() => onEditCountry(country)}
                                                         className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Edit
                                                     </span>
                                                 </li>
                                                 <li>
                                                     <span
-                                                        onClick={() => onApproveStory(story)}
+                                                        onClick={() => onApproveCountry(country)}
                                                         className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                        {story.approved ? 'Decline' : 'Approve'}
+                                                        {country.approved ? 'Decline' : 'Approve'}
                                                     </span>
                                                 </li>
                                                 <li>
                                                     <span
-                                                        onClick={() => onDeleteStory(story)}
+                                                        onClick={() => onDeleteCountry(country)}
                                                         className="cursor-pointer block px-4 py-2 text-sm text-red-400 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-red-400 dark:hover:text-white">
                                                         Delete
                                                     </span>
@@ -188,24 +203,14 @@ export default function Stories() {
                                 </div>
 
                                 <a href="#">
-                                    <img className="rounded-t-lg" src={story.image} alt="" />
+                                    <img className="rounded-t-lg" src={country.image} alt="" />
                                 </a>
                                 <div className="p-5">
-                                    <a href="#">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                            {story.title}
-                                        </h5>
-                                    </a>
-                                    <a href="#">
-                                        <p
-                                            className={`mb-2 font-bold p-1 text-green-100 ${
-                                                story.approved ? 'bg-green-500' : 'bg-yellow-500'
-                                            } max-w-fit rounded-md text-xs`}>
-                                            {story.approved ? 'Approved' : 'Not Approved'}
-                                        </p>
-                                    </a>
+                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        {country.name}
+                                    </h5>
                                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 truncate-3-lines">
-                                        {story.review}
+                                        {country.description}
                                     </p>
                                 </div>
                             </div>
@@ -215,19 +220,26 @@ export default function Stories() {
             </div>
 
             <PopUp
-                title={'Story Details'}
-                openModal={!!openEditStoryModal?._id}
-                setOpenModal={setOpenEditStoryModal}>
-                <EditStoryModal
-                    data={openEditStoryModal}
+                title={'Country Details'}
+                openModal={openNewCountryModal}
+                setOpenModal={setOpenNewCountryModal}>
+                <AddCountryModal onSuccess={onAdded} setOpenModal={setOpenNewCountryModal} />
+            </PopUp>
+
+            <PopUp
+                title={'Country Details'}
+                openModal={!!openEditCountryModal?._id}
+                setOpenModal={setOpenEditCountryModal}>
+                <EditCountryModal
+                    data={openEditCountryModal}
                     onSuccess={onEdited}
-                    setOpenModal={setOpenEditStoryModal}
+                    setOpenModal={setOpenEditCountryModal}
                 />
             </PopUp>
 
             <PopUp
-                title={'Delete Story'}
-                openModal={!!openStoryModal?._id}
+                title={'Delete Country'}
+                openModal={!!openCountryModal?._id}
                 setOpenModal={setOpenDeleteModal}>
                 <ConfirmModal
                     isProcessing={isProcessing}
@@ -237,16 +249,16 @@ export default function Stories() {
             </PopUp>
 
             <PopUp
-                title={`${openStoryModal?.approved ? 'Decline' : 'Approve'} Story`}
-                openModal={!!openStoryModal?._id}
-                setOpenModal={setOpenStoryModal}>
+                title={`${openCountryModal?.approved ? 'Decline' : 'Approve'} Country`}
+                openModal={!!openCountryModal?._id}
+                setOpenModal={setOpenCountryModal}>
                 <ConfirmModal
                     message={`Are you sure you want to ${
-                        openStoryModal?.approved ? 'decline' : 'approve'
+                        openCountryModal?.approved ? 'decline' : 'approve'
                     } this item?`}
                     isProcessing={isProcessing}
                     onConfirm={onApprove}
-                    setOpenModal={setOpenStoryModal}
+                    setOpenModal={setOpenCountryModal}
                 />
             </PopUp>
         </div>

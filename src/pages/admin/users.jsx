@@ -4,6 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import PopUp from '../../modals/popup';
 import ConfirmModal from '../../modals/confirm';
 import EditUserModal from '../../modals/edit-user';
+import SearchBar from '../../components/search-bar';
 
 export default function Users() {
     const [loading, setLoading] = React.useState(true);
@@ -13,13 +14,13 @@ export default function Users() {
     const [openDeleteModal, setOpenDeleteModal] = React.useState('');
 
     React.useEffect(() => {
+        setLoading(true);
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        setLoading(true);
+    const fetchData = (search = '') => {
         axiosInstance
-            .get('/users/all')
+            .get('/users/all', { params: { search } })
             .then((result) => {
                 if (result?.data?.data) setData(result?.data?.data);
             })
@@ -67,6 +68,11 @@ export default function Users() {
             <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
                 Users
             </h1>
+
+            <div className="mb-4">
+                <SearchBar onSearch={fetchData} />
+            </div>
+
             <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
