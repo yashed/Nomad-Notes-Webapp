@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["signin", "signup"]
+  "cSpell.words": ["signin", "signup"],
+  "deno.enable": false
 }

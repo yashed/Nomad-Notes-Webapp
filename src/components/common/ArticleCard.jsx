@@ -1,11 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ArticleCard({ to, imgSrc, location, date, readTime, title, description }) {
     return (
-        <Link to={to || "#"}
+        <Link
+            to={to || '#'}
             className="w-full lg:w-1/2 p-4 block text-black transition-transform duration-300 ease-in-out transform hover:translate-y-[-2px] hover:backface-visibility-visible relative">
-            <div><img className="aspect-[3/2] object-cover rounded-xl" src={imgSrc} alt="" /></div>
+            <div>
+                <img className="aspect-[3/2] object-cover rounded-xl" src={imgSrc} alt="" />
+            </div>
             <div className="p-4 ps-1">
                 <div className="text-base text-gray-500 w-full flex justify-between items-center pb-2">
                     <div className="w-1/2">{location}</div>
@@ -18,13 +21,15 @@ export default function ArticleCard({ to, imgSrc, location, date, readTime, titl
                 <div className="2xl:text-3xl text-2xl font-bold pb-2">{title}</div>
                 <div className="text-lg pb-2">{description}</div>
 
-                <Link to={to || "#"} className=" pt-2 text-blue-500 font-bold absolute bottom-0 flex items-center">
+                <Link
+                    to={to || '#'}
+                    className=" pt-2 text-blue-500 font-bold absolute bottom-0 flex items-center">
                     Read Full Post
                     <div className="text-2xl transform rotate-45 inline-block ml-2">
-                        <i class='bx bx-up-arrow-alt'></i>
+                        <i className="bx bx-up-arrow-alt"></i>
                     </div>
                 </Link>
             </div>
         </Link>
-    )
+    );
 }
