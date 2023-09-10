@@ -102,6 +102,7 @@ export default function Home() {
                 location={"Tokyo, Japan"}
                 title="The Shibuya"
                 description="Discover the best travel destinations based on your interests."
+                link={"/destination/italy"}
               />
               <DestinationCard
                 imgSrc="/images/common/Frame9.jpg"
@@ -112,7 +113,7 @@ export default function Home() {
                 imgSrc="/images/misc/dest2.jpg"
                 title="The Shibuya"
                 description="Discover the best travel destinations based on your interests."
-                link={"signin"}
+                link={"/destination/italy"}
               /><DestinationCard
                 imgSrc="/images/common/Frame17.jpg"
                 location={"Tokyo, Japan"}
@@ -128,7 +129,7 @@ export default function Home() {
                 imgSrc="/images/misc/dest2.jpg"
                 title="The Shibuya"
                 description="Discover the best travel destinations based on your interests."
-                link={"signin"}
+                link={"/destination/italy"}
               />
             </Carousel>
           </div>

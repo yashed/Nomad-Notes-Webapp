@@ -3,7 +3,6 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import 'react-notifications/lib/notifications.css';
 import './App.css';
 import Navbar from './layout/navbar';
-
 import Home from './pages/home';
 import Contact from './pages/contact';
 import SignIn from './pages/signin';
@@ -16,10 +15,20 @@ function App() {
         <div className="app">
             <Routes>
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/story/create" element={<CreateStory />} />
-                <Route path="/admin/*" element={<Admin />} />
+
+                <Route
+                    element={
+                        <React.Fragment>
+                            <Navbar />
+                            <Outlet />
+                        </React.Fragment>
+                    }>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/story/create" element={<CreateStory />} />
+                    <Route path="/admin/*" element={<Admin />} />
+                    <Route path="/destinations" element={<Destinations />} />
+                    <Route path="/destination/:destinationId" element={<DestinationDetail />} />
+                </Route>
             </Routes>
 
             <NotificationContainer />

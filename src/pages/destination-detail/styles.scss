@@ -1,0 +1,13 @@
+.text-stroke {
+    font-weight: 600;
+    color: white;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: white;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    @media (min-width: 1536px) {
+        -webkit-text-stroke-width: 2.5px;
+    }
+}
