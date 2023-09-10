@@ -67,12 +67,14 @@ export default function Home() {
                             location={"Tokyo, Japan"}
                             title="The Shibuya"
                             description="Discover the best travel destinations based on your interests."
+                            link={"/destination/italy"}
                         />
                         <DestinationCard
                             width={"lg:w-1/3"}
                             imgSrc="/images/common/Frame9.jpg"
                             location={"Rome, Italy"}
                             title="The Colosseum"
+                            link={"/destination/italy"}
                         />
                         <DestinationCard
                             width={"lg:w-1/3"}
@@ -86,12 +88,14 @@ export default function Home() {
                             location={"Tokyo, Japan"}
                             title="The Shibuya"
                             description="Discover the best travel destinations based on your interests."
+                            link={"/destination/italy"}
                         />
                         <DestinationCard
                             width={"lg:w-1/3"}
                             imgSrc="/images/common/Frame9.jpg"
                             location={"Rome, Italy"}
                             title="The Colosseum"
+                            link={"/destination/italy"}
                         />
                         <DestinationCard
                             width={"lg:w-1/3"}
