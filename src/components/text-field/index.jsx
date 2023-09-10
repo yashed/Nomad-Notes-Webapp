@@ -13,7 +13,9 @@ export default function TextField({
 }) {
     return (
         <div>
-            <label for={id} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label
+                htmlFor={id}
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 {label}
             </label>
             <input

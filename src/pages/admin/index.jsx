@@ -12,6 +12,8 @@ import Users from './users';
 import Stories from './stories';
 import './styles.css';
 import Countries from './countries';
+import axiosInstance from '../../utils/axios-instance';
+import LoadingScreen from '../../components/loading-screen';
 
 const adminRoutes = [
     {
@@ -38,6 +40,33 @@ const adminRoutes = [
 
 export default function Admin() {
     const [openMenu, setOpenMenu] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        setLoading(true);
+        verifyAdmin();
+    }, []);
+
+    const verifyAdmin = (search = '') => {
+        axiosInstance
+            .get('/auth/admin')
+            .then((result) => {
+                if (result?.data?.status === 'success') {
+                    setLoading(false);
+                } else {
+                    window.location.assign('/not-found');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                window.location.assign('/not-found');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    if (loading) <LoadingScreen />;
 
     return (
         <div id="admin-wrap">

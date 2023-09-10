@@ -141,14 +141,14 @@ export default function Users() {
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 onClick={() => setOpenEditModal(item)}
-                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                                 Edit
                                             </button>
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 onClick={() => setOpenDeleteModal(item._id)}
-                                                class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                className="font-medium text-red-600 dark:text-red-500 hover:underline">
                                                 Delete
                                             </button>
                                         </td>

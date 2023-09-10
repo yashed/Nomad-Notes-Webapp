@@ -124,9 +124,9 @@ export default function Countries() {
                 <button
                     onClick={() => setOpenNewCountryModal(true)}
                     type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Add New
-                    <BsPlus class="w-3.5 h-3.5 mr-2 text-white" />
+                    <BsPlus className="w-3.5 h-3.5 mr-2 text-white" />
                 </button>
             </div>
             <div className="mb-4">
@@ -185,13 +185,6 @@ export default function Countries() {
                                                 </li>
                                                 <li>
                                                     <span
-                                                        onClick={() => onApproveCountry(country)}
-                                                        className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                        {country.approved ? 'Decline' : 'Approve'}
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <span
                                                         onClick={() => onDeleteCountry(country)}
                                                         className="cursor-pointer block px-4 py-2 text-sm text-red-400 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-red-400 dark:hover:text-white">
                                                         Delete
@@ -239,7 +232,7 @@ export default function Countries() {
 
             <PopUp
                 title={'Delete Country'}
-                openModal={!!openCountryModal?._id}
+                openModal={!!openDeleteModal?._id}
                 setOpenModal={setOpenDeleteModal}>
                 <ConfirmModal
                     isProcessing={isProcessing}
