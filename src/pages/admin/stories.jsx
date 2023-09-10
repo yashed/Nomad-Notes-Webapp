@@ -227,7 +227,7 @@ export default function Stories() {
 
             <PopUp
                 title={'Delete Story'}
-                openModal={!!openStoryModal?._id}
+                openModal={!!openDeleteModal?._id}
                 setOpenModal={setOpenDeleteModal}>
                 <ConfirmModal
                     isProcessing={isProcessing}

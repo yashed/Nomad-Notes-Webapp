@@ -7,6 +7,7 @@ import TextField from '../components/text-field';
 import TextArea from '../components/text-area';
 import moment from 'moment/moment';
 import ImageUpload from '../components/image-upload';
+import CountrySelect from '../components/countryDropDown';
 
 export default function EditStoryModal({ data = {}, onSuccess }) {
     const [image, setImage] = React.useState('');
@@ -61,14 +62,35 @@ export default function EditStoryModal({ data = {}, onSuccess }) {
                     />
                 </div>
                 <div className="w-full max-w-sm">
-                    <TextField
-                        name="country"
+                    <label
+                        htmlFor="country"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Country
+                    </label>
+                    <CountrySelect
+                        styles={{
+                            control: (provided, state) => ({
+                                ...provided,
+                                boxShadow: 'none',
+                                borderColor: 'rgb(75, 85, 99, 0.7)',
+                                backgroundColor: 'transparent',
+                                color: '#fff',
+                                width: '100%'
+                            }),
+                            singleValue: (provided) => ({
+                                ...provided,
+                                color: '#fff'
+                            }),
+                            input: (provided) => ({
+                                ...provided,
+                                color: '#fff'
+                            })
+                        }}
+                        className="bg-transparent"
                         id="country"
-                        placeholder="Country"
-                        required
-                        type="text"
+                        name="country"
                         defaultValue={data.country}
-                        label="Country"
+                        required
                     />
                 </div>
                 <div className="w-full max-w-sm">

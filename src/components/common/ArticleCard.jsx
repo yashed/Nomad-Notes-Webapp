@@ -5,7 +5,7 @@ export default function ArticleCard({ to, imgSrc, location, date, readTime, titl
     return (
         <Link
             to={to || '#'}
-            className="w-full lg:w-1/2 p-4 block text-black transition-transform duration-300 ease-in-out transform hover:translate-y-[-2px] hover:backface-visibility-visible relative">
+            className="mb-7 w-full lg:w-1/2 p-4 block text-black transition-transform duration-300 ease-in-out transform hover:translate-y-[-2px] hover:backface-visibility-visible relative">
             <div>
                 <img className="aspect-[3/2] object-cover rounded-xl" src={imgSrc} alt="" />
             </div>
@@ -19,16 +19,14 @@ export default function ArticleCard({ to, imgSrc, location, date, readTime, titl
                     </div>
                 </div>
                 <div className="2xl:text-3xl text-2xl font-bold pb-2">{title}</div>
-                <div className="text-lg pb-2">{description}</div>
+                <div className="truncate-3-lines text-lg pb-2">{description}</div>
 
-                <Link
-                    to={to || '#'}
-                    className=" pt-2 text-blue-500 font-bold absolute bottom-0 flex items-center">
+                <p className=" pt-2 text-blue-500 font-bold absolute bottom-0 flex items-center">
                     Read Full Post
-                    <div className="text-2xl transform rotate-45 inline-block ml-2">
+                    <span className="text-2xl transform rotate-45 inline-block ml-2">
                         <i className="bx bx-up-arrow-alt"></i>
-                    </div>
-                </Link>
+                    </span>
+                </p>
             </div>
         </Link>
     );
