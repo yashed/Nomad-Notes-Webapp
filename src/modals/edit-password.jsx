@@ -4,31 +4,32 @@ import axiosInstance from '../utils/axios-instance';
 import { NotificationManager } from 'react-notifications';
 import { formToJSON } from 'axios';
 import TextField from '../components/text-field';
-import ImageUpload from '../components/image-upload';
-import ChangePasswordForm from './edit-password';
 
-export default function EditUserModal({ data = {}, onSuccess, onChangePassword }) {
-    const [image, setImage] = React.useState('');
-    const [changePassword, setChangePassword] = React.useState(false);
+export default function ChangePasswordForm({ data, onSuccess, setChangePassword }) {
     const [isProcessing, setIsProcessing] = React.useState(false);
 
     React.useEffect(() => {
-        if (data?.image) setImage(data.image);
-    }, [data]);
+        const p_el = document.getElementById('password');
+        const cp_el = document.getElementById('confirm_password');
+
+        if (p_el) p_el.value = '';
+        if (cp_el) cp_el.value = '';
+    });
 
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = formToJSON(e.target);
 
+        if (formData?.password !== formData?.confirm_password) {
+            return NotificationManager.warning("Passwords doesn't match");
+        }
+
         setIsProcessing(true);
         axiosInstance
-            .patch(`/${data?.role === 'ADMIN' ? 'admins' : 'users'}/update/${data._id}`, {
-                ...formData,
-                image
-            })
+            .patch(`/users/update/password/${data._id}`, formData)
             .then((result) => {
                 if (result?.data?.status === 'success') {
-                    NotificationManager.success('User details updated');
+                    NotificationManager.success('User password changed');
                     onSuccess(true);
                 }
             })
@@ -43,53 +44,41 @@ export default function EditUserModal({ data = {}, onSuccess, onChangePassword }
             });
     };
 
-    const showPasswordChange = () => {
-        setChangePassword(true);
-    };
-
-    return !changePassword ? (
+    return (
         <form className="w-full" onSubmit={onSubmit}>
             <Modal.Body className="w-full flex items-center flex-col gap-4">
-                <ImageUpload image={image} setImage={setImage} />
-
                 <div className="w-full max-w-sm">
                     <TextField
-                        name="name"
-                        id="name"
-                        placeholder="John"
+                        name="password"
+                        id="password"
+                        label="Password"
+                        placeholder="Password"
                         required
-                        type="text"
-                        defaultValue={data.name}
-                        label="Name"
+                        type="password"
+                        defaultValue=""
                     />
                 </div>
                 <div className="w-full max-w-sm">
                     <TextField
-                        name="email"
-                        id="email"
-                        placeholder="john@example.com"
+                        name="confirm_password"
+                        id="confirm_password"
+                        label="Confirm Password"
+                        placeholder="Password"
                         required
-                        type="email"
-                        defaultValue={data.email}
-                        label="Email"
+                        type="password"
+                        defaultValue=""
                     />
                 </div>
             </Modal.Body>
             <Modal.Footer className="flex justify-end gap-3">
-                <Button onClick={showPasswordChange} outline disabled={isProcessing}>
-                    Change Password
+                <Button onClick={() => setChangePassword(false)} outline disabled={isProcessing}>
+                    Edit Details
                 </Button>
 
                 <Button disabled={isProcessing} isProcessing={isProcessing} type="submit">
-                    Update
+                    Change
                 </Button>
             </Modal.Footer>
         </form>
-    ) : (
-        <ChangePasswordForm
-            data={data}
-            onSuccess={onSuccess}
-            setChangePassword={setChangePassword}
-        />
     );
 }
