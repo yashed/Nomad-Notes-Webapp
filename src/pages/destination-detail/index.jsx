@@ -46,7 +46,7 @@ export default function DestinationDetails() {
 
     const fetchRelated = () => {
         axiosInstance
-            .get(`/countries/random/${destinationId}`, { params: { search: '', limit: 6 } })
+            .get(`/countries/random/${destinationId}`, { params: { search: '', limit: 7 } })
             .then((result) => {
                 if (result?.data?.data) {
                     setRelatedData(result?.data?.data);
@@ -108,7 +108,8 @@ export default function DestinationDetails() {
                     </div>
 
                     <div className="flex flex-wrap justify-between px-0 mt-8 w-full">
-                        {relatedData?.map((item) => {
+                        {relatedData?.map((item, i) => {
+                            if (i > 5) return null;
                             return (
                                 <DestinationCard
                                     key={item?._id}

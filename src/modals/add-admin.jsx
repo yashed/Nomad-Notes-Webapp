@@ -48,7 +48,6 @@ export default function AddAdminModal({ onSuccess }) {
                 <div className="w-full max-w-sm">
                     <TextField
                         name="email"
-                        className="w-full"
                         id="email"
                         placeholder="john@example.com"
                         required

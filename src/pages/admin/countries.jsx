@@ -8,6 +8,7 @@ import ConfirmModal from '../../modals/confirm';
 import EditCountryModal from '../../modals/edit-country';
 import SearchBar from '../../components/search-bar';
 import AddCountryModal from '../../modals/add-country';
+import { Link } from 'react-router-dom';
 
 export default function Countries() {
     const [selectedItem, setSelectedItem] = React.useState('');
@@ -145,7 +146,9 @@ export default function Countries() {
                 ) : (
                     data.map((country) => {
                         return (
-                            <div
+                            <Link
+                                to={`/destination/${country?._id}`}
+                                target="_blank"
                                 key={country._id}
                                 className="relative max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <div className="absolute right-0 flex justify-end px-4 pt-4">
@@ -206,7 +209,7 @@ export default function Countries() {
                                         {country.description}
                                     </p>
                                 </div>
-                            </div>
+                            </Link>
                         );
                     })
                 )}
