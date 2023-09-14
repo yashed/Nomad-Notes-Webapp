@@ -187,23 +187,27 @@ export default function Stories() {
                                     </div>
                                 </div>
 
-                                <a href="#">
-                                    <img className="rounded-t-lg" src={story.image} alt="" />
-                                </a>
+                                <Link target="_blank" to={`/story/${story._id}`}>
+                                    <img
+                                        className="rounded-t-lg h-60 w-full object-cover"
+                                        src={story.image}
+                                        alt="Story"
+                                    />
+                                </Link>
                                 <div className="p-5">
-                                    <a href="#">
+                                    <Link target="_blank" to={`/story/${story._id}`}>
                                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                             {story.title}
                                         </h5>
-                                    </a>
-                                    <a href="#">
+                                    </Link>
+                                    <Link target="_blank" to={`/story/${story._id}`}>
                                         <p
                                             className={`mb-2 font-bold p-1 text-green-100 ${
                                                 story.approved ? 'bg-green-500' : 'bg-yellow-500'
                                             } max-w-fit rounded-md text-xs`}>
                                             {story.approved ? 'Approved' : 'Not Approved'}
                                         </p>
-                                    </a>
+                                    </Link>
                                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 truncate-3-lines">
                                         {story.review}
                                     </p>

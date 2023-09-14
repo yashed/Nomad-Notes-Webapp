@@ -4,10 +4,12 @@ import ConfirmModal from '../../modals/confirm';
 import axiosInstance from '../../utils/axios-instance';
 import { NotificationManager } from 'react-notifications';
 import './styles.css';
+import { Button } from 'flowbite-react';
 
 export default function AdminCard({ data = {}, onDeleteSuccess }) {
     const [deleteItem, setDeleteItem] = React.useState(false);
     const [isDeleting, setIsDeleting] = React.useState(false);
+    const user = sessionStorage.getItem('logged-user');
 
     const onDelete = () => {
         setIsDeleting(true);
@@ -61,11 +63,12 @@ export default function AdminCard({ data = {}, onDeleteSuccess }) {
                     {data.email || '-'}
                 </span>
                 <div className="flex mt-4 space-x-3 md:mt-6">
-                    <button
+                    <Button
+                        disabled={user === data?._id}
                         onClick={() => setDeleteItem(data?._id)}
-                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        className="inline-flex items-center px-4 py-0 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                         Delete
-                    </button>
+                    </Button>
                 </div>
             </div>
 

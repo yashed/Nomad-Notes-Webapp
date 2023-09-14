@@ -7,6 +7,8 @@ import axiosInstance from '../../utils/axios-instance';
 import { NotificationManager } from 'react-notifications';
 import EditUserModal from '../../modals/edit-user';
 
+export var logoutUser;
+
 export default function Navbar() {
     const location = useLocation();
     const [user, setUser] = React.useState({});
@@ -22,11 +24,11 @@ export default function Navbar() {
     }, []);
 
     const setUserSetting = () => {
-        const user = sessionStorage.getItem('logged-user');
+        const logged_user = sessionStorage.getItem('logged-user');
 
-        if (user)
+        if (logged_user) {
             axiosInstance
-                .get(`/users/${user}`)
+                .get(`/users/${logged_user}`)
                 .then((result) => {
                     if (result?.data?.status === 'success') {
                         setUser(result.data?.data);
@@ -39,6 +41,11 @@ export default function Navbar() {
                         error?.response?.data?.message || error.message || 'Error message'
                     );
                 });
+        } else if (user?._id) {
+            setUser({});
+            setIsAdmin(false);
+            window.location.assign('/');
+        }
     };
 
     const onSignedIn = () => {
@@ -103,6 +110,8 @@ export default function Navbar() {
             })
             .finally(() => setOpenMenu(false));
     };
+
+    logoutUser = () => onSignOut();
 
     if (location.pathname.includes('/admin')) return null;
 

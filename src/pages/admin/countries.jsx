@@ -198,9 +198,13 @@ export default function Countries() {
                                     </div>
                                 </div>
 
-                                <a href="#">
-                                    <img className="rounded-t-lg" src={country.image} alt="" />
-                                </a>
+                                <Link target="_blank" to={`/destination/${country._id}`}>
+                                    <img
+                                        className="rounded-t-lg h-60 w-full object-cover"
+                                        src={country.image}
+                                        alt="Country"
+                                    />
+                                </Link>
                                 <div className="p-5">
                                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                         {country.name}
